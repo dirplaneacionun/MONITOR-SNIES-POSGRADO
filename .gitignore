@@ -23,3 +23,6 @@ Scripts/CLASIFICAR-DIVISIONES-UNINORTE-SNIES/Retroalimentacion/*.json.bak
 Programas/
 # Catálogo de referencia usado solo durante la migración de las novedades antiguas: no forma parte de la herramienta.
 Programas_Referencia.xlsx
+
+# Manual de la versión anterior: se conserva solo en el equipo local hasta que se decida su actualización.
+MANUAL_POSGRADO.md
