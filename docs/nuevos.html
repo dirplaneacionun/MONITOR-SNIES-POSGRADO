@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-NIeJZsl6sLTTguZcrWSnS7DTicDxO0DSIh4Z3/OGgIE='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>PROGRAMAS ACADÉMICOS NUEVOS</title>
+  <meta name="description" content="Programas académicos nuevos · Monitor SNIES de programas académicos de posgrado">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="assets/img/favicon-uninorte.ico" sizes="32x32">
+  <link rel="preload" href="assets/fuentes/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/flatpickr/flatpickr.min.css?v=1b34a42552">
+  <link rel="stylesheet" href="assets/estilos.css?v=8185292e36">
+  <script type="importmap">
+    { "imports": {
+      "hyparquet": "./assets/vendor/hyparquet/src/index.js",
+      "hyparquet/": "./assets/vendor/hyparquet/",
+      "hyparquet-writer": "./assets/vendor/hyparquet-writer/src/index.js"
+    } }
+  </script>
+</head>
+<body data-tipo="nuevos">
+  <header class="encabezado">
+    <div class="encabezado-int">
+      <div class="enc-fila">
+        <div class="enc-marca">
+          <img class="enc-logo" src="assets/img/logo-uninorte-blanco.png" width="198" height="68" alt="Universidad del Norte">
+          <div class="enc-textos">
+            <h1 class="enc-titulo">PROGRAMAS ACADÉMICOS NUEVOS</h1>
+          <p class="enc-sub">Programas Académicos de Posgrado en Colombia</p>
+          </div>
+        </div>
+        <div class="enc-total" aria-live="polite"><div class="et">TOTAL</div><div class="ev" id="total">–</div><div class="es" id="total-s"></div></div>
+      </div>
+      <nav class="nav" aria-label="Apartados">
+        <a href="index.html">INICIO</a>
+        <a href="nuevos.html" class="activa" aria-current="page">NUEVOS</a>
+        <a href="modificados.html">MODIFICADOS</a>
+        <a href="inactivos.html">INACTIVOS</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenido">
+    <div id="filtros"></div>
+
+    <div class="fila">
+      <section class="tarjeta" aria-labelledby="t-g-evolucion">
+        <h2 class="tarjeta-tit" id="t-g-evolucion">EVOLUCIÓN DE PROGRAMAS ACADÉMICOS NUEVOS</h2>
+        <p class="tarjeta-sub">Programas que aparecen en el SNIES y no estaban en la ejecución anterior (incluye los reactivados), acumulados desde el inicio del periodo seleccionado.</p>
+        <div class="grafica " id="g-evolucion" role="img" aria-label="Evolución de programas académicos nuevos"></div>
+      </section>
+    </div>
+    <div class="fila tercio">
+      <section class="tarjeta" aria-labelledby="t-g-sector">
+        <h2 class="tarjeta-tit" id="t-g-sector">PROGRAMAS ACADÉMICOS NUEVOS POR SECTOR</h2>
+        <p class="tarjeta-sub">Distribución de los registros del periodo filtrado entre instituciones oficiales y privadas.</p>
+        <div class="grafica " id="g-sector" role="img" aria-label="Programas académicos nuevos por sector"></div>
+      </section>
+      <section class="tarjeta" aria-labelledby="t-g-sector-evol">
+        <h2 class="tarjeta-tit" id="t-g-sector-evol">EVOLUCIÓN DE PROGRAMAS ACADÉMICOS NUEVOS POR SECTOR</h2>
+        <p class="tarjeta-sub">Programas nuevos acumulados de instituciones oficiales y privadas.</p>
+        <div class="grafica " id="g-sector-evol" role="img" aria-label="Evolución de programas académicos nuevos por sector"></div>
+      </section>
+    </div>
+    <div class="fila">
+      <section class="tarjeta" aria-labelledby="t-g-nivel-evol">
+        <h2 class="tarjeta-tit" id="t-g-nivel-evol">EVOLUCIÓN DE PROGRAMAS ACADÉMICOS NUEVOS POR NIVEL DE FORMACIÓN</h2>
+        <p class="tarjeta-sub">Programas nuevos acumulados según el nivel de formación (especialización, maestría y doctorado).</p>
+        <div class="grafica alta" id="g-nivel-evol" role="img" aria-label="Evolución de programas académicos nuevos por nivel de formación"></div>
+      </section>
+    </div>
+    <div class="fila tercio">
+      <section class="tarjeta" aria-labelledby="t-g-justificacion">
+        <h2 class="tarjeta-tit" id="t-g-justificacion">PROGRAMAS ACADÉMICOS NUEVOS POR JUSTIFICACIÓN</h2>
+        <p class="tarjeta-sub">Distribución según la justificación del programa (profundización o investigación) de los registros del periodo filtrado. El SNIES registra la justificación desde abril de 2026, no para todos los programas y no en todas sus descargas: SIN INFORMACIÓN agrupa los registros sin este dato.</p>
+        <div class="grafica alta" id="g-justificacion" role="img" aria-label="Programas académicos nuevos por justificación"></div>
+      </section>
+      <section class="tarjeta" aria-labelledby="t-g-justificacion-evol">
+        <h2 class="tarjeta-tit" id="t-g-justificacion-evol">EVOLUCIÓN DE PROGRAMAS ACADÉMICOS NUEVOS POR JUSTIFICACIÓN</h2>
+        <p class="tarjeta-sub">Programas nuevos acumulados según la justificación del programa.</p>
+        <div class="grafica alta" id="g-justificacion-evol" role="img" aria-label="Evolución de programas académicos nuevos por justificación"></div>
+      </section>
+    </div>
+    <div class="fila dos">
+      <section class="tarjeta" aria-labelledby="t-g-deptos">
+        <h2 class="tarjeta-tit" id="t-g-deptos">DEPARTAMENTOS CON MAYOR NÚMERO DE PROGRAMAS ACADÉMICOS NUEVOS</h2>
+        <p class="tarjeta-sub">Departamentos de oferta con mayor número de registros en el periodo filtrado, de mayor a menor.</p>
+        <div class="grafica " id="g-deptos" role="img" aria-label="Departamentos con mayor número de programas académicos nuevos"></div>
+      </section>
+      <section class="tarjeta" aria-labelledby="t-g-instituciones">
+        <h2 class="tarjeta-tit" id="t-g-instituciones">UNIVERSIDADES CON MAYOR NÚMERO DE PROGRAMAS ACADÉMICOS NUEVOS</h2>
+        <p class="tarjeta-sub">Instituciones con mayor número de registros en el periodo filtrado, de mayor a menor.</p>
+        <div class="grafica " id="g-instituciones" role="img" aria-label="Universidades con mayor número de programas académicos nuevos"></div>
+      </section>
+    </div>
+    <div class="fila">
+      <section class="tarjeta" aria-labelledby="t-g-modalidad">
+        <h2 class="tarjeta-tit" id="t-g-modalidad">EVOLUCIÓN DE PROGRAMAS ACADÉMICOS NUEVOS POR MODALIDAD</h2>
+        <p class="tarjeta-sub">Programas nuevos acumulados según la modalidad agrupada: presencial, virtual, a distancia, híbrida y dual.</p>
+        <div class="grafica " id="g-modalidad" role="img" aria-label="Evolución de programas académicos nuevos por modalidad"></div>
+      </section>
+    </div>
+    <div class="fila">
+      <section class="tarjeta" aria-labelledby="t-g-periodos">
+        <h2 class="tarjeta-tit" id="t-g-periodos">PROGRAMAS ACADÉMICOS NUEVOS POR NÚMERO DE PERIODOS DE DURACIÓN</h2>
+        <p class="tarjeta-sub">Cantidad de registros del periodo filtrado según la duración del programa en periodos académicos.</p>
+        <div class="grafica baja" id="g-periodos" role="img" aria-label="Programas académicos nuevos por número de periodos de duración"></div>
+      </section>
+    </div>
+    <div class="fila">
+      <section class="tarjeta" aria-labelledby="t-g-cine">
+        <h2 class="tarjeta-tit" id="t-g-cine">EVOLUCIÓN DE PROGRAMAS ACADÉMICOS NUEVOS POR CAMPO DE CINE ESPECÍFICO</h2>
+        <p class="tarjeta-sub">Campos de CINE específico elegidos en el filtro superior, que comparte su selección con el desplegable de esta gráfica. Con TODOS se muestran los 10 campos con más registros nuevos; con una selección, los campos marcados (hasta 10: los que tengan más registros nuevos).</p>
+        <div id="cine-ctrl"></div>
+        <div class="grafica " id="g-cine" role="img" aria-label="Evolución de programas académicos nuevos por campo de cine específico"></div>
+      </section>
+    </div>
+    <div class="fila">
+      <section class="tarjeta" aria-labelledby="t-g-division">
+        <h2 class="tarjeta-tit" id="t-g-division">EVOLUCIÓN DE PROGRAMAS ACADÉMICOS NUEVOS POR DIVISIÓN DE UNINORTE</h2>
+        <p class="tarjeta-sub">Programas nuevos acumulados según la división académica de la Universidad del Norte con la que se relacionan.</p>
+        <div class="grafica alta" id="g-division" role="img" aria-label="Evolución de programas académicos nuevos por división de uninorte"></div>
+      </section>
+    </div>
+    <section class="tarjeta" aria-labelledby="t-tabla">
+      <h2 class="tarjeta-tit" id="t-tabla">REGISTROS DE PROGRAMAS ACADÉMICOS NUEVOS</h2>
+      <p class="tarjeta-sub">Todos los registros de programas nuevos que cumplen los filtros, con todas las columnas, ordenados desde la fecha más reciente. Haga clic en un encabezado para ordenar según el tipo de dato; DESCARGAR exporta los registros filtrados.</p>
+      <div id="tabla"></div>
+    </section>
+    <img class="pie-logo" src="assets/img/logo-uninorte-principal.png" width="107" height="40" alt="Universidad del Norte">
+    <p class="pie-pagina">Fuente: Sistema Nacional de Información de la Educación Superior (SNIES), Ministerio de Educación Nacional · Dirección de Planeación, Universidad del Norte</p>
+  </main>
+
+  <script src="assets/vendor/plotly/plotly.min.js?v=6d21266ce1"></script>
+  <script src="assets/vendor/flatpickr/flatpickr.min.js?v=1eeab1cb77"></script>
+  <script src="assets/vendor/flatpickr/l10n/es.min.js?v=dac7fd9270"></script>
+  <script src="data/comun.js?v=3085ca75e2"></script>
+  <script src="data/nuevos.js?v=8764bfbe20"></script>
+  <script src="assets/app.js?v=a34556067e"></script>
+  <script src="assets/detalle.js?v=729c84ceeb"></script>
+</body>
+</html>
