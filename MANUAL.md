@@ -523,7 +523,7 @@ Se envía a los destinatarios al finalizar una ejecución exitosa que cuenta con
 |---|---|
 | **Asunto** | `MONITOR SNIES POSGRADO · Reporte del DD/MM/AAAA` |
 | **Formatos** | Texto plano y HTML (versiones del mismo contenido). El HTML incluye el logotipo institucional incrustado; no lleva archivos adjuntos. |
-| **Identidad visual** | La misma del Dashboard: paleta institucional, tipografía y estilos de tarjetas y tablas. En pantallas angostas, los clientes que admiten estilos incrustados muestran los indicadores en dos columnas y las tablas se desplazan horizontalmente dentro de su tarjeta. El ancho máximo del mensaje es de 760 px. |
+| **Identidad visual** | La misma del Dashboard: paleta institucional, tipografía y estilos de tarjetas y tablas. En pantallas angostas, los clientes que admiten estilos incrustados muestran los indicadores en dos columnas y las tablas se desplazan horizontalmente dentro de su tarjeta. El ancho máximo del mensaje es de 760 px y la letra de las tablas no es menor de 10 px. |
 
 Estructura del mensaje, en orden:
 
