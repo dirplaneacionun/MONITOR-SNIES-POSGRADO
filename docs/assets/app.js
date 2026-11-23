@@ -1275,8 +1275,8 @@
 
   /**
    * Categorías de nivel de formación y de justificación en el orden del catálogo (orden académico del nivel), con
-   * SIN INFORMACIÓN al final si algún registro de `fuentes` no tiene el dato. Fijan el orden de las opciones del gráfico y
-   * el color de cada categoría, que es el mismo en todas las páginas.
+   * SIN INFORMACIÓN al final si algún registro de `fuentes` no tiene el dato. Ese orden fija el color de cada categoría,
+   * que es el mismo en todas las páginas; las leyendas de las gráficas de líneas ordenan las series por su total.
    */
   function categoriasPosgrado(fuentes) {
     const sin = (campo) => fuentes.some((f) => f.some((r) => r[campo] === "SIN INFORMACIÓN"));

@@ -18,11 +18,6 @@ Scripts/CLASIFICAR-DIVISIONES-UNINORTE-SNIES/Salidas/Programas.xlsx
 # equipo para restaurar, pero no se versionan porque Git ya guarda todas las versiones de retroalimentacion.json.
 Scripts/CLASIFICAR-DIVISIONES-UNINORTE-SNIES/Retroalimentacion/*.json.bak
 
-# Descargas crudas históricas de posgrado (Programas postgrado DD-MM-AA.xlsx): su contenido normalizado y clasificado
-# quedó en Historico/. Se conservan solo en el equipo local, como respaldo de la migración.
+# Descargas crudas del portal archivadas en el equipo local (Programas postgrado DD-MM-AA.xlsx): no se versionan; su
+# contenido normalizado y clasificado se conserva en Historico/.
 Programas/
-# Catálogo de referencia usado solo durante la migración de las novedades antiguas: no forma parte de la herramienta.
-Programas_Referencia.xlsx
-
-# Manual de la versión anterior: se conserva solo en el equipo local hasta que se decida su actualización.
-MANUAL_POSGRADO.md

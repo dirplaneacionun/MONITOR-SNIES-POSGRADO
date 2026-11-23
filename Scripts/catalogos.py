@@ -71,8 +71,10 @@ def modalidad_grupo(modalidad) -> str:
 
 
 # ── Nivel de formación y justificación (posgrado) ─────────────────────────────
-# Orden académico de presentación (filtros, leyendas y colores): de la especialización técnica profesional al
-# doctorado. Un valor nuevo del SNIES se agrega al final, en orden alfabético, y se advierte en el log.
+# Orden académico, de la especialización técnica profesional al doctorado. Determina el color de cada nivel en las
+# gráficas, que es el mismo en todas las páginas (el filtro lista los niveles en orden alfabético y las leyendas de las
+# gráficas de líneas, de mayor a menor total). Un valor nuevo del SNIES se agrega al final, en orden alfabético, y se
+# advierte en el log.
 NIVELES_FORMACION = (
     "ESPECIALIZACION TECNICO PROFESIONAL", "ESPECIALIZACION TECNOLOGICA", "ESPECIALIZACION UNIVERSITARIA",
     "ESPECIALIZACION MEDICO QUIRURGICA", "MAESTRIA", "DOCTORADO",
