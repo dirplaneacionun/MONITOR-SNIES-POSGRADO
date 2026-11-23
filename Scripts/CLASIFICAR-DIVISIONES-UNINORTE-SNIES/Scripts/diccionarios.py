@@ -8147,4 +8147,7 @@ NOMBRE_DIVISION_OVERRIDE = {
     "especializacion en negociacion y toma de decisiones": "ESCUELA DE NEGOCIOS",
 
     "especializacion tecnologica en gestion del riesgo de desastres": "INGENIERIAS",
+    "maestria en mitigacion y adaptacion al cambio climatico": "CIENCIAS BASICAS",
+    "especializacion en auditoria internacional y compliance": "ESCUELA DE NEGOCIOS",
+    "especializacion en practicas corporales expandidas": "HUMANIDADES, ARTES Y CIENCIAS SOCIALES",
 }
