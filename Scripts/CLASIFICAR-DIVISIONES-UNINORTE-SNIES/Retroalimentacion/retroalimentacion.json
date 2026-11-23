@@ -341381,7 +341381,7 @@
     "origen": "HISTORICO",
     "detalle": null,
     "fecha": null,
-    "nombre": "especializacion en prevencion reduccion y atencion de desastres",
+    "nombre": "especializacion en reduccion del riesgo de desastre",
     "nombres": {
       "especializacion en prevencion reduccion y atencion de desastres": {
         "division": "INGENIERIAS",
@@ -680696,15 +680696,29 @@
     "fecha": "2026-11-22",
     "nombre": "maestria en ciencias ambientales"
   },
+  "119853": {
+    "division": "INGENIERIAS",
+    "origen": "OVERRIDE",
+    "detalle": "especializacion en inteligencia artificial",
+    "fecha": "2026-11-23",
+    "nombre": "especializacion en inteligencia artificial"
+  },
+  "119908": {
+    "division": "HUMANIDADES, ARTES Y CIENCIAS SOCIALES",
+    "origen": "OVERRIDE",
+    "detalle": "especializacion en intervencion psicosocial",
+    "fecha": "2026-11-23",
+    "nombre": "especializacion en intervencion psicosocial"
+  },
   "_meta": {
-    "count": 32211,
+    "count": 32213,
     "formato": 4,
     "registro_nombres": true,
     "origenes": {
       "PROGRAMAS_UN": 357,
-      "OVERRIDE": 12812,
+      "OVERRIDE": 12814,
       "HISTORICO": 19042
     },
-    "diccionario": "0159976c8cb8"
+    "diccionario": "42d432012300"
   }
 }
