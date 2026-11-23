@@ -31,6 +31,16 @@
   /** Colores del sector: oficial en negro y privado en el color de acento de la página (rojo por defecto). */
   const colorSector = (acento = ROJO) => ({ PRIVADO: acento, OFICIAL: NEGRO });
   const SECTOR_COLOR = colorSector();
+  /**
+   * Colores de la justificación con la misma regla del sector: profundización en el color de acento de la página (rojo
+   * en Inicio e Inactivos, verde en Nuevos, amarillo en Modificados), investigación en negro y SIN INFORMACIÓN en gris.
+   * Un valor no contemplado toma un color de la paleta de series. Retorna { categoría: { color } } para las categorías de `lista`.
+   */
+  function coloresJustificacion(lista, acento = ROJO) {
+    const fijos = { PROFUNDIZACION: acento, INVESTIGACION: NEGRO };
+    const otros = asignarColores(lista.filter((k) => !(k in fijos)));
+    return Object.fromEntries(lista.map((k) => [k, fijos[k] ? { color: fijos[k] } : otros[k]]));
+  }
   const TINTA = NEGRO, TINTA2 = "#3E4751", REJILLA = "#E5E5E5";
   /** Título del eje de conteo de todas las gráficas: una sola unidad de medida, "registros". */
   const EJE_REGISTROS = { text: "REGISTROS", font: { size: 10 } };
@@ -1280,6 +1290,6 @@
     C, CAT, ESTADO, CATEGORICA, MAX_SERIES, GRIS, SECTOR_COLOR, colorSector, ROJO, AMARILLO, NEGRO, OCRE, colorLinea, marcador, TINTA, TINTA2, fmt, fmtFecha, plural, variacion, esc, normalizar,
     decodificar, derivar, asignarColores, Filtros, SelectorCine, Tabla, lineas, barrasH, barrasV, torta, plotly, vacio,
     contarPorFecha, contar, seriesPorCategoria, ejeMeses, ejeEntero, grupoModalidad, valorFecha, tipoColumna,
-    primeraFecha, desdeFecha, opcionesProgramas, etqModalidad, etiquetasModalidad, categoriasPosgrado,
+    primeraFecha, desdeFecha, opcionesProgramas, etqModalidad, etiquetasModalidad, categoriasPosgrado, coloresJustificacion,
   };
 })();

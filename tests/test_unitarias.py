@@ -502,7 +502,7 @@ class TestCorreo(unittest.TestCase):
         self.assertNotIn("La tabla presenta", texto)   # caben todos los registros: sin remisión al Dashboard
 
     def test_todos_los_registros_y_nota_de_novedades_de_interes(self):
-        # Caso real del 17/11/2026: 13 cambios, 2 de una universidad de mayor interés; la tabla los muestra todos
+        # Ejecución con 13 cambios, 2 de una universidad de mayor interés: la tabla los muestra todos
         mod = self._df([9999] * 11 + [1711, 1711]).assign(TIPO_CAMBIO_DETECTADO="MODALIDAD", CAMBIO_DETECTADO="A → B")
         res = {"posgrado": {"modificados": mod, "total_activos": 13}}
         html = send_report.construir_cuerpo(res, dt.date(2026, 11, 17))

@@ -27,7 +27,7 @@
   const programas = A.opcionesProgramas(fuentes, (r) => (r._R ? fechasActivos[r._R[r._R.length - 1][1]] : r.FECHA_DE_OBTENCION) || "");
   // Nivel de formación y justificación: orden del catálogo y color fijo por categoría, iguales en todas las páginas
   const { niveles, justificaciones } = A.categoriasPosgrado(fuentes);
-  const colNiv = A.asignarColores(niveles), colJus = A.asignarColores(justificaciones);
+  const colNiv = A.asignarColores(niveles), colJus = A.coloresJustificacion(justificaciones);   // justificación: colores del apartado, como el sector
 
   const filtros = new A.Filtros($("filtros"), {
     buscar: "Buscar por Código de Programa o Institución",
