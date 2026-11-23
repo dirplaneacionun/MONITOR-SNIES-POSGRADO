@@ -24,7 +24,7 @@
   const programas = A.opcionesProgramas([registros]);
   // Nivel de formación y justificación: orden del catálogo y color fijo por categoría, iguales en todas las páginas
   const { niveles, justificaciones } = A.categoriasPosgrado([registros]);
-  const colNiv = A.asignarColores(niveles), colJus = A.asignarColores(justificaciones);
+  const colNiv = A.asignarColores(niveles), colJus = A.coloresJustificacion(justificaciones, color);   // justificación: colores del apartado, como el sector
 
   // Rango temporal: cada gráfica empieza en la primera ejecución con datos de su métrica (antes no hay información)
   const inicioPagina = A.primeraFecha(registros);

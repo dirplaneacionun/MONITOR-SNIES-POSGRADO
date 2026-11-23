@@ -1698,6 +1698,22 @@ def probar_estructura(d, base):
               c["cred"] == [NEGRO, AMARILLO] and c["per"] == [NEGRO, AMARILLO] and c["heat"][-1][1] == AMARILLO, str(c))
     c = colores("inactivos", g + "return { sector: g('g-sector')[0].marker.colors, univ: g('g-instituciones')[0].marker.color };")
     verificar("colores · inactivos · sector y universidades en rojo", set(c["sector"]) == {ROJO, NEGRO} and c["univ"] == ROJO, str(c))
+    # La barra de filtros permanece visible al desplazarse (pantallas de más de 640 px): se mide su posición real
+    for pagina in ("index", "modificados"):
+        d.get("about:blank")
+        q = Pagina(d, base, f"{pagina}.html")
+        tope = q.js("window.scrollTo(0, 2500); return new Promise(r => setTimeout(() => r(Math.round(document.querySelector('.filtros').getBoundingClientRect().top)), 300));")
+        verificar(f"barra de filtros · {pagina} · permanece visible al desplazarse", tope == 0, f"posición superior {tope} px tras desplazar 2.500 px")
+    # Posgrado: la justificación sigue la regla del sector (profundización en el color del apartado, investigación en negro y
+    # SIN INFORMACIÓN en gris), en la torta y en la evolución
+    GRIS = "#9E9E9E"
+    for pagina, color in (("index", ROJO), ("nuevos", VERDE), ("modificados", AMARILLO), ("inactivos", ROJO)):
+        c = colores(pagina, g + "const p = g('g-justificacion')[0]; return { torta: Object.fromEntries(p.customdata.map((k, i) => [k, p.marker.colors[i]])), "
+                                "evol: Object.fromEntries(g('g-justificacion-evol').map(t => [t.name.split(' · ')[0], t.line.color])) };")
+        linea = OCRE if color == AMARILLO else color
+        esperado = lambda acento: {k: v for k, v in {"PROFUNDIZACION": acento, "INVESTIGACION": NEGRO, "SIN INFORMACIÓN": GRIS}.items()}  # noqa: E731
+        verificar(f"colores · {pagina} · justificación con los colores del apartado (torta y evolución)",
+                  c["torta"] == esperado(color) and c["evol"] == esperado(linea), str(c))
 
     # Posición de las gráficas: el tipo de cambio a la derecha de la evolución de modificados
     d.get("about:blank")

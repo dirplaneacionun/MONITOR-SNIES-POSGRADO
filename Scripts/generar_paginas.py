@@ -126,11 +126,6 @@ def scripts(datos, js):
     return "\n".join(lineas)
 
 
-# Descripciones de las gráficas por nivel de formación y por justificación (posgrado)
-NOTA_JUSTIFICACION = ("El SNIES registra la justificación desde abril de 2026, no para todos los programas y no en todas sus "
-                      "descargas: SIN INFORMACIÓN agrupa los registros sin este dato.")
-
-
 def filas_nivel_justificacion(estado: str, corte: str, evolucion: str) -> list[str]:
     """
     Filas de las gráficas por nivel de formación y por justificación, que van debajo de las de sector: la evolución por
@@ -141,9 +136,9 @@ def filas_nivel_justificacion(estado: str, corte: str, evolucion: str) -> list[s
     e = estado.lower()
     return [
         ancha(f"EVOLUCIÓN DE PROGRAMAS ACADÉMICOS {estado} POR NIVEL DE FORMACIÓN", "g-nivel-evol",
-              f"Programas {e} {evolucion} según el nivel de formación (especialización, maestría y doctorado).", "alta"),
+              f"Programas {e} {evolucion} según el nivel de formación.", "alta"),
         par(tarjeta(f"PROGRAMAS ACADÉMICOS {estado} POR JUSTIFICACIÓN", "g-justificacion",
-                    f"Distribución según la justificación del programa (profundización o investigación) {corte}. {NOTA_JUSTIFICACION}", "alta"),
+                    f"Distribución {corte} según la justificación del programa: profundización o investigación.", "alta"),
             tarjeta(f"EVOLUCIÓN DE PROGRAMAS ACADÉMICOS {estado} POR JUSTIFICACIÓN", "g-justificacion-evol",
                     f"Programas {e} {evolucion} según la justificación del programa.", "alta"), "tercio"),
     ]
