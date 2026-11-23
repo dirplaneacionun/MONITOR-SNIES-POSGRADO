@@ -523,7 +523,7 @@ Se envía a los destinatarios al finalizar una ejecución exitosa que cuenta con
 |---|---|
 | **Asunto** | `MONITOR SNIES POSGRADO · Reporte del DD/MM/AAAA` |
 | **Formatos** | Texto plano y HTML (versiones del mismo contenido). El HTML incluye el logotipo institucional incrustado; no lleva archivos adjuntos. |
-| **Identidad visual** | La misma del Dashboard: paleta institucional, tipografía y estilos de tarjetas y tablas. En pantallas angostas, los clientes que admiten estilos incrustados muestran los indicadores en dos columnas y las tablas se desplazan horizontalmente dentro de su tarjeta. El ancho máximo del mensaje es de 760 px. |
+| **Identidad visual** | La misma del Dashboard: paleta institucional, tipografía y estilos de tarjetas y tablas. En pantallas angostas, los clientes que admiten estilos incrustados muestran los indicadores en dos columnas y las tablas se desplazan horizontalmente dentro de su tarjeta. El ancho máximo del mensaje es de 760 px y la letra de las tablas no es menor de 10 px. |
 
 Estructura del mensaje, en orden:
 
@@ -685,6 +685,8 @@ Ejecutar manualmente el flujo con la opción de correo activada y revisar el res
 
 Si el servidor rechaza solo a algunos destinatarios, el correo llega a los demás y el registro de la ejecución indica cuántos fueron rechazados, su posición en `DESTINATARIOS` y el código SMTP (sin mostrar las direcciones).
 
+Ante una falla transitoria al conectar o autenticar (por ejemplo, `Connection unexpectedly closed`, tiempo de espera agotado o falla de resolución de nombres), la herramienta reintenta hasta tres veces, con esperas de 5 y 15 segundos, y registra una advertencia por cada intento fallido. No se reintentan el rechazo de las credenciales (535), los errores de certificado ni un error durante el envío del mensaje, para no duplicarlo. La alerta técnica usa el mismo mecanismo.
+
 ## 17. Publicación en GitHub Pages
 
 El Dashboard se publica desde la carpeta `docs/` de la rama `main`. Configuración requerida en `Settings → Pages`:
@@ -839,7 +841,8 @@ El registro del orquestador incorpora el de cada herramienta. Las horas se expre
 
 | Prueba | Alcance | Ejecución |
 |---|---|---|
-| **Unitarias** (`tests/test_unitarias.py`) | Detección de novedades, histórico y tipos de datos, protecciones de la descarga, contenido y tamaño del correo, envío y rechazos SMTP, seguridad del sitio y de los flujos de trabajo, privacidad de los registros, reclasificación, vigilancia de la retroalimentación y completado de Modificados. | `python -m unittest discover -s tests` (segundos). Se ejecutan antes de cada ejecución semanal y de cada reclasificación. |
+| **Unitarias** (`tests/test_unitarias.py`) | Detección de novedades, histórico y tipos de datos, protecciones de la descarga, contenido y tamaño del correo, envío, reintentos y rechazos SMTP, seguridad del sitio y de los flujos de trabajo, privacidad de los registros, reclasificación, vigilancia de la retroalimentación y completado de Modificados. | `python -m unittest discover -s tests` (segundos). Se ejecutan antes de cada ejecución semanal y de cada reclasificación. |
+| **ETL y clasificador** (`tests/test_etl_clasificador.py`) | Conversión de encabezados, códigos, números y fechas del ETL; exclusión de códigos SNIES inválidos o repetidos y archivo de revisión; conversión de tipos todo o nada y rangos plausibles; protección ante una fuente truncada; decisión y consenso de la votación del clasificador, normalización de texto, overrides por nombre, escritura atómica y verificación de integridad de las salidas. Usan archivos temporales y no modifican los datos del proyecto. | `python -m unittest discover -s tests` (segundos). |
 | **De punta a punta** (`tests/e2e_dashboard.py`) | Operan el Dashboard con Chrome: filtros, dependencias entre filtros, selector de fechas, buscador, tablas, paginación, selector CINE, descarga, navegación, enlaces guardados, vista móvil, consistencia visual, rendimiento y errores de consola. Cada valor mostrado se compara con un cálculo independiente sobre `Historico/` y `Novedades/`. | `python tests/e2e_dashboard.py` (10 a 20 minutos; `--rapida` prueba una muestra). |
 
 El flujo **Pruebas del Dashboard** ejecuta ambas en las solicitudes de cambios y al publicar en `main` cambios que afecten el Dashboard, sus generadores o las pruebas, y puede ejecutarse manualmente. No se ejecuta con las actualizaciones semanales de datos.
@@ -937,6 +940,7 @@ Las versiones se registran en `Librerias/package.json`, que Dependabot vigila. P
 |---|---|---|
 | Error SMTP 535 | Contraseña de inicio de sesión en lugar de contraseña de aplicación, o secreto incorrecto. | Generar una contraseña de aplicación y actualizar `SMTP_PASS`. |
 | El reporte no llega pero la ejecución terminó | Falla del envío después de guardar los datos; el registro la detalla. | Revisar la alerta técnica y la configuración de los secretos. |
+| Advertencia «Falla transitoria de la conexión SMTP» en el registro | Corte momentáneo de la conexión con el servidor de correo. | Ninguna si el correo se envió después: la herramienta reintentó sola. Si fallan los tres intentos, la ejecución termina con error: volver a ejecutar el flujo. |
 | Llega a menos destinatarios | El servidor rechazó direcciones. | El registro indica posición y código; revisar `DESTINATARIOS`. |
 | No llegó correo en una ejecución exitosa | Era la primera ejecución del histórico (línea base) o se ejecutó con `--sin-correo` o con la opción de correo desactivada. | Verificar las opciones de la ejecución. |
 | La tabla del correo está incompleta | Se aplicó el límite de tamaño del mensaje. | Usar el enlace «Dashboard» de la nota bajo la tabla. |
@@ -1103,6 +1107,7 @@ Solo existe un tipo de selección de fechas a la vez; si el enlace contiene vari
 | `COLS_VIGILAR` | `Scripts/run_snies.py` | 5 columnas | Columnas que generan registros de modificación. |
 | `FILTROS_PORTAL` | `Scripts/run_snies.py` | 3 filtros | Valores que debe tener cada fila del reporte. |
 | `SMTP_HOST`, `SMTP_PORT` | `Scripts/send_report.py` | `smtp.gmail.com`, 587 | Servidor de correo. |
+| `INTENTOS_SMTP`, `ESPERA_SMTP` | `Scripts/send_report.py` | 3, (5, 15) s | Intentos de conexión y autenticación SMTP ante fallas transitorias, y espera antes del segundo y del tercero. |
 | `LIMITE_HTML` | `Scripts/send_report.py` | 95 KB | Tamaño máximo del HTML del correo. |
 | `DASHBOARD_URL` | `Scripts/send_report.py` | URL del sitio | Enlace del correo al Dashboard. |
 | `MAYOR_INTERES`, `UNINORTE` | `Scripts/catalogos.py` | Códigos SNIES | Grupos de universidades. |
