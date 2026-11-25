@@ -186,12 +186,12 @@ El procedimiento de asignación se describe en la [sección 20](#20-clasificaci�
 
 El filtro **Niveles de formación** lista las opciones en orden alfabético. En la evolución por nivel de formación, la leyenda ordena las series de mayor a menor total, como todas las gráficas de líneas, y cada nivel conserva su color en todas las páginas. Si el SNIES incorpora un nivel nuevo, el Dashboard lo incluye con un color propio y la ejecución registra una advertencia.
 
-**Justificación.** El SNIES informa la justificación únicamente para las maestrías, con dos valores: `PROFUNDIZACION` e `INVESTIGACION`. Los demás niveles de formación y las maestrías sin dato no tienen justificación. Para poder filtrar y graficar estos registros, el Dashboard los agrupa como **SIN INFORMACIÓN** (en gris); las tablas y los archivos de datos conservan el valor original, vacío.
+**Justificación.** El SNIES informa la justificación únicamente para las maestrías, con dos valores: `PROFUNDIZACION` e `INVESTIGACION`. Los demás niveles de formación y las maestrías sin dato no tienen justificación. Para poder filtrar y graficar estos registros, el Dashboard los agrupa como **SIN INFORMACION** (en gris); las tablas y los archivos de datos conservan el valor original, vacío. Solo los valores vacíos o nulos del archivo fuente se agrupan así: ningún valor informado se reemplaza.
 
 Consecuencias para el análisis:
 
 - Al elegir *PROFUNDIZACION* o *INVESTIGACION* solo permanecen maestrías.
-- Al elegir un nivel distinto de maestría, el filtro de justificaciones solo ofrece *SIN INFORMACIÓN*.
+- Al elegir un nivel distinto de maestría, el filtro de justificaciones solo ofrece *SIN INFORMACION*.
 - La cobertura temporal de este dato se describe en la [sección 19.3](#193-cobertura-temporal).
 
 ---
@@ -231,53 +231,52 @@ La barra de filtros es común a los cuatro apartados y se conserva al pasar de u
 
 | Filtro | Campo que filtra | Apartados |
 |---|---|---|
-| Buscador | Código SNIES del programa o código de la institución padre | Todos |
+| Buscador | Nombre del programa, nombre de la institución, código SNIES del programa o código de la institución padre | Todos |
 | Universidades | Institución padre, en tres grupos | Todos |
 | Programas académicos | Nombre del programa | Todos |
 | Departamentos | Departamento de oferta | Todos |
-| Municipios | Municipio de oferta | Todos |
 | Sectores | Oficial o privado | Todos |
 | Niveles de formación | Nivel de formación del programa (especialización, maestría o doctorado) | Todos |
 | Modalidades | Modalidad agrupada | Todos |
-| Justificaciones | Justificación del programa (profundización, investigación o sin información) | Todos |
+| Justificaciones | Justificación del programa (profundización, investigación o sin información: `SIN INFORMACION`) | Todos |
 | Campos de CINE específico | Campo específico de la clasificación CINE F 2013 A.C., agrupado por campo amplio | Todos |
 | Divisiones | División de la Universidad del Norte | Todos |
-| Cambios | Tipo de cambio detectado | Solo Modificados |
+| Cambios | Tipos de cambio de `CAMBIO_DETECTADO`: un registro con varios cambios pasa si alguno de sus tipos está elegido | Solo Modificados |
 | Fechas | Fecha de ejecución | Todos |
 
 ### 4.2 Buscador
 
-- Campo de texto con el rótulo *Buscar por Código de Programa o Institución*.
-- Realiza una **coincidencia exacta** con el código SNIES del programa o con el código de la institución padre. No busca por nombre.
+- Campo de texto con el rótulo *Buscar por Programa, Institución o Código*.
+- Realiza una **búsqueda parcial** sobre el nombre del programa, el nombre de la institución, el código SNIES del programa y el código de la institución padre, sin distinguir mayúsculas ni tildes (la Ñ se trata como N). Cada palabra escrita debe aparecer en alguno de esos campos, en cualquier orden; por ejemplo, `ingenieria norte` o un fragmento de un código.
+- Se ignoran los espacios sobrantes y los caracteres invisibles que se pegan sin querer; un texto vacío o de solo espacios no filtra, y el texto se limita a 200 caracteres.
 - Se ejecuta con la lupa o con la tecla **Enter**. Para quitar la búsqueda, se borra el texto (la **×** del campo) y se presiona Enter o la lupa.
-- Si el código no existe, las gráficas muestran «Sin datos para los filtros seleccionados» y los indicadores en cero.
+- Si nada coincide, las gráficas muestran «Sin datos para los filtros seleccionados» y los indicadores en cero.
 
 ### 4.3 Filtros desplegables de selección múltiple
 
-Departamentos, municipios, sectores, niveles de formación, modalidades, justificaciones, divisiones, tipo de cambio y programas académicos comparten el mismo comportamiento:
+Departamentos, sectores, niveles de formación, modalidades, justificaciones, divisiones, tipo de cambio y programas académicos comparten el mismo comportamiento:
 
 | Elemento | Comportamiento |
 |---|---|
 | **Botón** | Muestra el estado: la etiqueta general (por ejemplo, *TODOS LOS DEPARTAMENTOS*), el nombre de la opción si hay una sola, o la cantidad si hay varias (por ejemplo, *3 DEPARTAMENTOS*). Si hay restricción, se resalta en rojo. Al pasar el cursor se muestran las opciones seleccionadas (hasta 15; con más, su cantidad). |
-| **Casilla TODOS** | Seleccionarla marca todas las opciones (sin restricción). No se puede desmarcar: el filtro debe conservar al menos una opción. |
-| **Casillas de opciones** | Marcan o desmarcan cada opción. El filtro no admite quedar sin ninguna opción disponible marcada; esa acción se bloquea y el panel muestra el aviso *Debe permanecer al menos una opción seleccionada.* |
-| **AISLAR** | Botón que aparece al pasar el cursor sobre una opción (siempre visible en pantallas táctiles). Deja marcada únicamente esa opción. |
+| **Casilla TODOS** | Marcarla selecciona todas las opciones (sin restricción). Desmarcarla deja todas las opciones sin marcar, para elegir solo las de interés. |
+| **Casillas de opciones** | Marcan o desmarcan cada opción. Se pueden desmarcar todas: un filtro sin ninguna opción marcada actúa como TODOS (no restringe los datos). Al marcar una opción con TODOS desmarcada, esa opción tiene prioridad y el filtro se limita a ella. Al cerrar el panel sin ninguna opción marcada, TODOS vuelve a quedar marcada. |
 | **Cuadro de búsqueda del panel** | En los filtros con lista extensa, filtra las opciones por texto, sin distinguir tildes ni mayúsculas. |
 | **Cierre** | El panel se cierra al elegir otro filtro, al hacer clic fuera de él o con la tecla **Esc**. |
 
-Los textos de los filtros por defecto son: *TODAS LAS UNIVERSIDADES*, *TODOS LOS PROGRAMAS ACADÉMICOS*, *TODOS LOS DEPARTAMENTOS*, *TODOS LOS MUNICIPIOS*, *TODOS LOS SECTORES*, *TODOS LOS NIVELES DE FORMACIÓN*, *TODAS LAS MODALIDADES*, *TODAS LAS JUSTIFICACIONES*, *TODOS LOS CAMPOS DE CINE ESPECÍFICO*, *TODAS LAS DIVISIONES*, *TODOS LOS CAMBIOS* y *TODAS LAS FECHAS*.
+Los textos de los filtros por defecto son: *TODAS LAS UNIVERSIDADES*, *TODOS LOS PROGRAMAS ACADÉMICOS*, *TODOS LOS DEPARTAMENTOS*, *TODOS LOS SECTORES*, *TODOS LOS NIVELES DE FORMACIÓN*, *TODAS LAS MODALIDADES*, *TODAS LAS JUSTIFICACIONES*, *TODOS LOS CAMPOS DE CINE ESPECÍFICO*, *TODAS LAS DIVISIONES*, *TODOS LOS CAMBIOS* y *TODAS LAS FECHAS*.
 
 En el filtro de programas, los códigos SNIES que comparten el mismo nombre forman una sola opción; el filtro de universidades acota sus resultados a la institución elegida.
 
 ### 4.4 Filtros jerárquicos
 
-**Universidades.** Presenta tres grupos: *UNIVERSIDAD DEL NORTE*, *UNIVERSIDADES DE MAYOR INTERÉS* y *OTRAS UNIVERSIDADES*. Los dos últimos se expanden con la flecha **▸** para elegir instituciones individuales. La casilla de un grupo queda marcada, parcial o vacía según las instituciones disponibles que contiene. **AISLAR** en un grupo selecciona todas sus instituciones. Si dos instituciones tienen el mismo nombre, se distinguen con su código entre paréntesis. El cuadro de búsqueda permite buscar por nombre o por código de institución; si el nombre de un grupo coincide, se muestra con todas sus instituciones.
+**Universidades.** Presenta tres grupos: *UNIVERSIDAD DEL NORTE*, *UNIVERSIDADES DE MAYOR INTERÉS* y *OTRAS UNIVERSIDADES*. Los dos últimos se expanden con la flecha **▸** para elegir instituciones individuales. La casilla de un grupo queda marcada, parcial o vacía según las instituciones disponibles que contiene. Con TODAS desmarcada, marcar la casilla de un grupo selecciona todas sus instituciones. Si dos instituciones tienen el mismo nombre, se distinguen con su código entre paréntesis. El cuadro de búsqueda permite buscar por nombre o por código de institución; si el nombre de un grupo coincide, se muestra con todas sus instituciones.
 
 **Campos de CINE específico.** Presenta los campos amplios de la clasificación CINE y, al expandirlos, sus campos específicos. Funciona igual que el filtro de universidades. Su selección se comparte con el desplegable de la gráfica de evolución por campo de CINE (véase la [sección 5.3](#53-gráficas-de-inicio)).
 
 ### 4.5 Filtros dependientes
 
-Las opciones de cada filtro se recalculan tras cada cambio: solo se ofrecen los valores que existen en algún registro que cumpla todos los demás filtros. Por ejemplo, al elegir el departamento *ATLÁNTICO*, el filtro de municipios solo muestra los municipios de ese departamento, y el de fechas solo habilita las fechas con registros. Así nunca se ofrecen combinaciones sin resultados.
+Las opciones de cada filtro se recalculan tras cada cambio: solo se ofrecen los valores que existen en algún registro que cumpla todos los demás filtros. Por ejemplo, al elegir el sector *OFICIAL*, el filtro de departamentos solo muestra los departamentos con programas oficiales, y el de fechas solo habilita las fechas con registros. Así nunca se ofrecen combinaciones sin resultados.
 
 Si una selección previa deja de ser compatible con los demás filtros (por ejemplo, al abrir un enlace guardado), el filtro se restablece a *TODOS*.
 
@@ -297,7 +296,7 @@ El botón **TODAS LAS FECHAS** del pie del panel restablece el filtro y cierra e
 ### 4.7 Restablecer y conteo
 
 - **LIMPIAR FILTROS** restablece todos los filtros (incluido el buscador y las fechas) a su estado inicial.
-- El **contador** de la derecha indica el número de registros que cumplen los filtros. En Inicio corresponde a los programas activos en la última ejecución de la selección. En las páginas de detalle corresponde a los registros del apartado; en Modificados añade el número de programas distintos (por ejemplo, `1.508 registros · 936 programas distintos`).
+- El **contador** de la derecha indica el número de registros que cumplen los filtros. En Inicio corresponde a los programas activos en la última ejecución de la selección. En las páginas de detalle corresponde a los registros del apartado; en Modificados cada registro corresponde a un programa en una ejecución, con todos sus cambios (por ejemplo, `1.151 registros`).
 
 ## 5. Apartado Inicio
 
@@ -317,7 +316,7 @@ Cuatro tarjetas en la parte superior. Las tarjetas de novedades son enlaces al a
 |---|---|---|
 | **PROGRAMAS ACTIVOS (ÚLTIMA EJECUCIÓN)** | Número de programas activos en el corte, con los filtros aplicados. | Variación con signo frente a la ejecución anterior (`+5 frente al DD/MM/AAAA`), `Sin variación frente al DD/MM/AAAA`, o `Programas activos al DD/MM/AAAA` si no hay ejecución anterior. |
 | **NUEVOS (ÚLTIMA EJECUCIÓN)** | Registros nuevos y reactivados de la última ejecución de la selección. | `Ejecución del DD/MM/AAAA`. |
-| **MODIFICADOS (ÚLTIMA EJECUCIÓN)** | Registros de cambio de la última ejecución de la selección. | Número de programas distintos y fecha (`9 programas distintos · DD/MM/AAAA`). |
+| **MODIFICADOS (ÚLTIMA EJECUCIÓN)** | Registros de cambio de la última ejecución de la selección. | Número de cambios detectados y fecha (`12 cambios · DD/MM/AAAA`); un programa con varios cambios en la ejecución es un solo registro. |
 | **INACTIVOS (ÚLTIMA EJECUCIÓN)** | Registros de programas inactivos de la última ejecución de la selección. | `Ejecución del DD/MM/AAAA`. |
 
 Los colores de borde de las tarjetas identifican cada estado: negro (activos), verde (nuevos), amarillo (modificados) y rojo (inactivos).
@@ -377,7 +376,7 @@ Los tres apartados comparten estructura. Los filtros se aplican a los registros 
 | **Aumentos y reducciones de número de créditos en programas académicos** | Barras por ejecución: hacia arriba (negro), registros en que los créditos aumentaron; hacia abajo (amarillo), en que se redujeron. La leyenda muestra el total de cada sentido. |
 | **Aumentos y reducciones de número de periodos de duración en programas académicos** | Igual que la anterior, para el número de periodos (negro: se alargó; amarillo: se acortó). |
 
-En Modificados, un programa puede tener varios registros (uno por cada columna que cambió); por ello el contador informa también el número de programas distintos.
+En Modificados cada registro es un programa en una ejecución y reúne todos sus cambios en `CAMBIO_DETECTADO` (por ejemplo, `NUMERO DE CREDITOS: 141 → 130 | MODALIDAD: A DISTANCIA → HIBRIDA (PRESENCIAL-VIRTUAL)`; en la tabla y en la descarga se muestra una línea por cambio). Un registro con varios tipos cuenta una vez en cada tipo en la gráfica por tipo de cambio, y las tres gráficas de cambios (transiciones de modalidad, créditos y periodos) usan todos los cambios de los registros filtrados, aunque el filtro de **Cambios** sea de otro tipo.
 
 ## 7. Gráficas: interacción común
 
@@ -398,7 +397,7 @@ En Modificados, un programa puede tener varios registros (uno por cada columna q
 
 ### 8.1 Contenido
 
-Las tablas muestran **todas las columnas** del registro, ordenadas por defecto desde la ejecución más reciente. Las primeras columnas son la fecha de obtención y, según el apartado, el tipo de novedad o de cambio y el cambio detectado, seguidas del nombre de la institución, el nombre del programa, el departamento y municipio de oferta, el sector, el nivel de formación, la modalidad, la justificación, los créditos, los periodos, la periodicidad, el costo de matrícula y la división de la Universidad del Norte. El resto de columnas conserva el orden del archivo (véase el [Anexo A](#anexo-a-diccionario-de-datos)).
+Las tablas muestran **todas las columnas** del registro, ordenadas por defecto desde la ejecución más reciente. Las primeras columnas son la fecha de obtención y, según el apartado, el tipo de novedad (Nuevos) o los cambios detectados (Modificados, columna `CAMBIO_DETECTADO`), seguidas del nombre de la institución, el nombre del programa, el departamento y municipio de oferta, el sector, el nivel de formación, la modalidad, la justificación, los créditos, los periodos, la periodicidad, el costo de matrícula y la división de la Universidad del Norte. El resto de columnas conserva el orden del archivo (véase el [Anexo A](#anexo-a-diccionario-de-datos)).
 
 ### 8.2 Formato de los valores
 
@@ -408,7 +407,7 @@ Las tablas muestran **todas las columnas** del registro, ordenadas por defecto d
 | Costos de matrícula | Entero con separador de miles. |
 | Puntaje total | Hasta cuatro decimales. |
 | Otros números | Sin separador de miles, alineados a la derecha. |
-| Tipo de cambio | Con tilde y en mayúsculas (por ejemplo, `NÚMERO DE CRÉDITOS`), igual que en el filtro, las gráficas y el correo. |
+| Tipo de cambio | En mayúsculas y sin tildes (por ejemplo, `NUMERO DE CREDITOS`), igual que en el filtro, las gráficas y el correo. |
 | Vacíos | Celda vacía. |
 
 ### 8.3 Orden, paginación y navegación
@@ -420,16 +419,17 @@ Las tablas muestran **todas las columnas** del registro, ordenadas por defecto d
 
 ### 8.4 Descarga
 
-El botón **DESCARGAR** genera un archivo **Parquet** con los registros que cumplen los filtros, con todas las columnas y en el orden vigente de la tabla (en Inicio, de la pestaña visible).
+El botón **DESCARGAR** genera un archivo de **Excel (.xlsx)** con los registros que cumplen los filtros, con todas las columnas y en el orden vigente de la tabla (en Inicio, de la pestaña visible).
 
 | Aspecto | Detalle |
 |---|---|
-| Nombre del archivo | `Programas Academicos [Nuevos / Modificados / Inactivos] AAAA-MM-DD.parquet`, con la fecha de la última ejecución. |
-| Tipos | Las fechas se guardan como fecha, los números como enteros o decimales y los demás campos como texto. |
-| Proceso | Se genera en el navegador; no se envían datos a ningún servidor. Mientras se genera, el botón muestra *GENERANDO...*. |
+| Nombre del archivo | `Programas Academicos [Nuevos / Modificados / Inactivos] AAAA-MM-DD.xlsx`, con la fecha de la última ejecución. |
+| Contenido | Una sola hoja con los encabezados (con espacios en lugar de guiones bajos, en negro y con la fila fija) y solo los registros filtrados. |
+| Tipos | Las fechas se guardan como fecha de Excel (`dd/mm/aaaa`, sin hora), los números como números y los demás campos como texto, sin fórmulas. Se conservan las tildes y la Ñ. |
+| Proceso | Se genera en el navegador al pulsar el botón; no se envían datos a ningún servidor ni se guarda ningún archivo de Excel en el repositorio. Mientras se genera, el botón muestra *GENERANDO...*. |
 | Sin registros | Se informa con un aviso y no se genera archivo. |
 
-Los archivos Parquet pueden abrirse con `pandas`, Power BI y Excel (Power Query).
+Los datos de origen (`Historico/` y `Novedades/`) siguen almacenándose en Parquet; el archivo de Excel es solo una descarga para análisis propios.
 
 ## 9. Vistas compartibles (parámetros de la dirección)
 
@@ -462,7 +462,7 @@ Accesibilidad: los controles son botones, casillas y campos estándar operables 
 
 ### 11.2 Revisar la oferta de la Universidad del Norte
 
-1. Abrir el filtro **Universidades**, pasar el cursor sobre *UNIVERSIDAD DEL NORTE* y pulsar **AISLAR**.
+1. Abrir el filtro **Universidades**, desmarcar **TODAS LAS UNIVERSIDADES** y marcar *UNIVERSIDAD DEL NORTE*.
 2. Los indicadores, las gráficas y las tablas se actualizan con los programas de la institución.
 3. Para comparar con las universidades de mayor interés, marcar además el grupo *UNIVERSIDADES DE MAYOR INTERÉS*.
 
@@ -474,26 +474,26 @@ Accesibilidad: los controles son botones, casillas y campos estándar operables 
 
 ### 11.4 Identificar la oferta de una región
 
-1. Elegir en **Departamentos** (y, si se requiere, en **Municipios**) los de interés. Las opciones de los demás filtros se reducen a lo disponible.
+1. Elegir en **Departamentos** los de interés (se desmarca **TODOS** y se marcan los departamentos). Las opciones de los demás filtros se reducen a lo disponible.
 2. Revisar en Inicio las gráficas de modalidad, división y campo de CINE.
-3. Para ver solo un departamento, usar **AISLAR** sobre su opción.
+3. Para ver solo un departamento, marcar únicamente su opción.
 
 ### 11.5 Revisar los cambios de créditos o de modalidad
 
 1. Abrir **MODIFICADOS**.
-2. En **Cambios**, aislar *NÚMERO DE CRÉDITOS* o *MODALIDAD*.
-3. Consultar la gráfica de aumentos y reducciones o la de transiciones de modalidad, y la tabla, cuya columna *CAMBIO DETECTADO* muestra `anterior → nuevo`.
+2. En **Cambios**, marcar solo *NUMERO DE CREDITOS* o *MODALIDAD*: se muestran los programas que tuvieron ese tipo de cambio (junto con los demás cambios que hayan tenido en la misma ejecución).
+3. Consultar la gráfica de aumentos y reducciones o la de transiciones de modalidad, y la tabla, cuya columna *CAMBIO DETECTADO* muestra una línea por cambio con el formato `TIPO: anterior → nuevo`.
 
 ### 11.6 Seguir un programa específico
 
-1. Escribir su código SNIES en el buscador y pulsar Enter.
+1. Escribir su nombre, el de su institución o su código SNIES en el buscador y pulsar Enter.
 2. Abrir cada apartado: si el programa tiene novedades, aparecen en las tablas. El filtro se conserva al cambiar de apartado.
 
 ### 11.7 Obtener los datos para análisis propios
 
 1. Aplicar los filtros deseados.
 2. En la tabla, ordenar si se requiere y pulsar **DESCARGAR**.
-3. Abrir el archivo Parquet con `pandas`, Power BI o Excel (Power Query).
+3. Abrir el archivo de Excel (.xlsx) descargado.
 
 Para el detalle de todos los programas activos de una ejecución, consultar `Historico/Historico Programas Activos AAAA.parquet` en el repositorio.
 
@@ -504,10 +504,10 @@ Para el detalle de todos los programas activos de una ejecución, consultar `His
 
 ### 11.9 Analizar la oferta por nivel de formación y por justificación
 
-1. En **INICIO**, abrir el filtro **Niveles de formación** y elegir el nivel de interés (por ejemplo, pasar el cursor sobre *MAESTRIA* y pulsar **AISLAR**).
-2. Abrir **Justificaciones** y elegir *PROFUNDIZACION* o *INVESTIGACION* para distinguir el tipo de maestría. Con un nivel distinto de maestría, el filtro solo ofrece *SIN INFORMACIÓN*.
+1. En **INICIO**, abrir el filtro **Niveles de formación** y elegir el nivel de interés (por ejemplo, desmarcar **TODOS** y marcar *MAESTRIA*).
+2. Abrir **Justificaciones** y elegir *PROFUNDIZACION* o *INVESTIGACION* para distinguir el tipo de maestría. Con un nivel distinto de maestría, el filtro solo ofrece *SIN INFORMACION*.
 3. Consultar la evolución por nivel de formación, el anillo y la evolución por justificación, y las columnas *NIVEL DE FORMACIÓN* y *JUSTIFICACION* de las tablas de novedades.
-4. Para ver los programas que no tienen justificación, elegir *SIN INFORMACIÓN* en el filtro.
+4. Para ver los programas que no tienen justificación, elegir *SIN INFORMACION* en el filtro.
 
 ---
 
@@ -523,22 +523,22 @@ Se envía a los destinatarios al finalizar una ejecución exitosa que cuenta con
 |---|---|
 | **Asunto** | `MONITOR SNIES POSGRADO · Reporte del DD/MM/AAAA` |
 | **Formatos** | Texto plano y HTML (versiones del mismo contenido). El HTML incluye el logotipo institucional incrustado; no lleva archivos adjuntos. |
-| **Identidad visual** | La misma del Dashboard: paleta institucional, tipografía y estilos de tarjetas y tablas. En pantallas angostas, los clientes que admiten estilos incrustados muestran los indicadores en dos columnas y las tablas se desplazan horizontalmente dentro de su tarjeta. El ancho máximo del mensaje es de 760 px y la letra de las tablas no es menor de 10 px. |
+| **Identidad visual** | La misma del Dashboard: paleta institucional, tipografía y estilos de tarjetas y tablas. En pantallas angostas, los clientes que admiten estilos incrustados muestran los indicadores en dos columnas y las tablas se desplazan horizontalmente dentro de su tarjeta. El ancho máximo del mensaje es de 900 px y la letra de las tablas no es menor de 10 px. |
 
 Estructura del mensaje, en orden:
 
 | Sección | Contenido |
 |---|---|
 | **Encabezado** | Título, botón **VER DASHBOARD COMPLETO** y la fecha de la ejecución. |
-| **Indicadores** | Programas activos (con variación frente a la ejecución anterior), nuevos, modificados (con número de programas distintos) e inactivos. Coinciden con los del Dashboard. |
+| **Indicadores** | Programas activos (con variación frente a la ejecución anterior), nuevos, modificados (con el número de cambios) e inactivos. Coinciden con los del Dashboard. |
 | **Resumen de la ejecución** | Descripción de la descarga, la variación de programas activos y las novedades detectadas, con cuántas corresponden a la Universidad del Norte y a las Universidades de Mayor Interés. |
 | **Novedades por grupo de universidades** | Tabla con nuevos, modificados e inactivos de cada grupo y su total. |
 | **Programas académicos nuevos** | Descripción, tabla de registros y nota con las novedades de la Universidad del Norte y de las Universidades de Mayor Interés. |
-| **Programas académicos modificados** | Igual, con el tipo de cambio y el cambio detectado. |
+| **Programas académicos modificados** | Igual, con el cambio detectado (un programa por fila, con una línea por cada cambio). |
 | **Programas académicos inactivos** | Igual. |
 | **Pie** | Fuente de los datos. |
 
-Columnas de las tablas: institución, programa, nivel de formación, municipio, modalidad y división de Uninorte; Nuevos añade el tipo de novedad y Modificados el tipo de cambio y el cambio detectado. Las secciones sin novedades muestran un mensaje en lugar de la tabla.
+Columnas de las tablas: institución, programa, nivel de formación, departamento, modalidad y división de Uninorte; Nuevos añade el tipo de novedad y Modificados el cambio detectado (entre la modalidad y la división de Uninorte). Las secciones sin novedades muestran un mensaje en lugar de la tabla.
 
 **Orden de los registros:** primero la Universidad del Norte, luego las Universidades de Mayor Interés y después las demás, cada grupo por institución y programa.
 
@@ -632,7 +632,7 @@ Una ejecución manual **sí publica datos y, con la opción activada, envía el 
 | **Caída del ETL** | Las filas a exportar caen más del 10 % respecto de la salida del ETL existente. | El ETL aborta ese archivo; `--force` lo permite. |
 | **Coherencia del resultado** | El clasificador debe devolver las mismas filas que el ETL, sin códigos repetidos y con las columnas de clasificación. | Se detiene sin guardar. |
 | **Valores fuera del rango plausible** | Fechas anteriores a 1950 o futuras, entre otras. | Se conservan y se registran como alerta (indicando fila y código SNIES). |
-| **Categorías no contempladas** | Sectores, modalidades, niveles de formación o justificaciones fuera de los catálogos, o más divisiones que colores disponibles. | Advertencia en el registro; la ejecución continúa (la modalidad desconocida se agrupa como *SIN INFORMACIÓN*; un nivel o una justificación nuevos se incluyen en el Dashboard con un color propio). |
+| **Categorías no contempladas** | Sectores, modalidades, niveles de formación o justificaciones fuera de los catálogos, o más divisiones que colores disponibles. | Advertencia en el registro; la ejecución continúa (la modalidad desconocida se agrupa como *SIN INFORMACION*; un nivel o una justificación nuevos se incluyen en el Dashboard con un color propio). |
 | **Tamaño de la retroalimentación** | `retroalimentacion.json` ≥ 40 MB (aviso) o ≥ 80 MB (crítico). | Advertencia en el registro y anotación en GitHub Actions; la ejecución continúa. |
 | **Escritura atómica** | Los archivos Parquet se escriben en un archivo temporal que reemplaza al definitivo al terminar. | Una interrupción no deja archivos incompletos. |
 
@@ -745,7 +745,7 @@ python -m http.server 8766 --directory docs         # sirve el Dashboard en http
 |---|---|
 | `Historico/Historico Programas Activos AAAA.parquet` | Un archivo por año con todas las ejecuciones de ese año (42 columnas: las 41 del reporte procesado y `FECHA_DE_OBTENCION`). Cada ejecución es un grupo de filas independiente, en orden de fecha. Los años nuevos adoptan el esquema del año anterior. |
 | `Novedades/Nuevos.parquet` | Registros de programas nuevos y reactivados (columnas del histórico más `TIPO_NOVEDAD`). |
-| `Novedades/Modificados.parquet` | Un registro por cambio (columnas del histórico más `TIPO_CAMBIO_DETECTADO` y `CAMBIO_DETECTADO`). |
+| `Novedades/Modificados.parquet` | Un registro por programa y ejecución (columnas del histórico más `CAMBIO_DETECTADO`, con todos los cambios del programa en esa ejecución). |
 | `Novedades/Inactivos.parquet` | Registros de programas inactivos, con los datos que tenían en la ejecución anterior. |
 | `docs/data/comun.js`, `activos.js`, `nuevos.js`, `modificados.js`, `inactivos.js` | Datos compactos del Dashboard: catálogos, fechas, indicadores, versiones de programas activos con sus rangos de ejecuciones y las tablas de novedades. Se regeneran completos en cada ejecución. |
 
@@ -859,7 +859,7 @@ Recomendación antes de fusionar cambios: abrir una solicitud de cambios, verifi
 | **Entradas del flujo** | Se pasan como variables de entorno, no se insertan en el script, para evitar inyección de comandos. |
 | **Registros públicos** | El formato de registro sustituye las rutas personales por marcadores y las direcciones de correo por `<correo>`. Los rechazos SMTP se registran sin direcciones. |
 | **Correo** | Conexión STARTTLS con verificación del certificado y del nombre del servidor. El contenido de las celdas se escapa para evitar inyección de HTML. Las alertas técnicas solo se envían a la cuenta remitente. |
-| **Dashboard** | Política de seguridad de contenido: solo scripts propios del sitio, sin objetos incrustados ni formularios y sin solicitudes a otros orígenes. Los valores de la dirección se tratan como datos y se escapan antes de mostrarse. Las librerías y la tipografía se alojan en el propio sitio. La descarga a Parquet se genera en el navegador. |
+| **Dashboard** | Política de seguridad de contenido: solo scripts propios del sitio, sin objetos incrustados ni formularios y sin solicitudes a otros orígenes. Los valores de la dirección se tratan como datos y se escapan antes de mostrarse. Las librerías y la tipografía se alojan en el propio sitio. La descarga en Excel (.xlsx) se genera en el navegador, con librerías alojadas en el propio sitio. |
 | **Datos** | Los datos proceden de fuentes públicas del SNIES; no se almacenan datos personales de estudiantes. |
 
 ## 24. Dependencias y actualizaciones
@@ -884,8 +884,8 @@ El clasificador verifica sus salidas con las versiones exactas de `openpyxl` y `
 |---|---|---|
 | Plotly.js | 2.35.2 | Gráficas. |
 | flatpickr | 4.6.13 | Calendarios del selector de fechas. |
-| hyparquet-writer | 0.18.0 | Generación de archivos Parquet en el navegador. |
-| hyparquet | 1.32.0 | Dependencia de la anterior. |
+| write-excel-file | 4.1.1 | Generación de la descarga en Excel (.xlsx) en el navegador. |
+| fflate | 0.8.3 | Compresión ZIP del archivo de Excel (dependencia de la anterior). |
 
 Las versiones se registran en `Librerias/package.json`, que Dependabot vigila. Para actualizar una librería, se reemplazan sus archivos en `docs/assets/vendor`, se actualiza la versión en ese registro y se ejecutan las pruebas. La tipografía es Montserrat (licencia SIL Open Font License).
 
@@ -897,12 +897,12 @@ Las versiones se registran en `Librerias/package.json`, que Dependabot vigila. P
 
 - **Periodicidad histórica:** las ejecuciones de 2025 están espaciadas de forma irregular y entre el 27/08/2025 y el 22/04/2026 no hay ejecuciones. Las novedades de esas fechas provienen de comparaciones entre descargas espaciadas de forma irregular: las del 22/04/2026 acumulan los cambios del periodo sin ejecuciones y no pueden asignarse a una fecha anterior. Las gráficas de evolución conectan los puntos sin distinguir intervalos irregulares.
 - **Modificados:** solo se vigilan cinco columnas. Otros cambios (costo de matrícula, resolución, título, nivel de formación, justificación, etc.) no generan registros de modificación.
-- **Búsqueda:** el buscador solo admite coincidencia exacta de códigos; no busca por nombre. Para buscar por nombre se usa el filtro de programas académicos.
+- **Búsqueda:** el buscador es parcial y sin tildes sobre cuatro campos (nombre del programa, nombre de la institución, código del programa y código de la institución padre); no busca por departamento, sector ni otros campos, que tienen su propio filtro.
 - **Programas inactivos:** un programa se considera inactivo cuando deja de figurar en el reporte filtrado, es decir, cuando deja de cumplir alguno de los filtros del universo (por ejemplo, por cambio de estado). Si reaparece, se registra como reactivado.
 - **Dependencia del portal:** la descarga depende de la estructura del portal del SNIES. Un cambio en el portal detiene la ejecución sin guardar datos.
 - **Calidad de la fuente:** algunos valores del SNIES conservan imperfecciones de origen (por ejemplo, caracteres no depurados en algunos nombres o fechas fuera del rango plausible). Se conservan tal como vienen y las fechas atípicas se registran como alertas.
 - **Clasificación:** la división es una asignación automática basada en reglas; los programas de confianza insuficiente se listan para revisión y pueden requerir ajustes en las reglas.
-- **Justificación:** el SNIES la informa solo para maestrías, y no para todas. Está disponible desde la ejecución del 22/04/2026 y las descargas del 22/09/2026, 29/09/2026 y 06/10/2026 no la incluyeron; en esas fechas, y en las anteriores, los programas figuran como *SIN INFORMACIÓN* en las gráficas, de modo que las series por justificación presentan saltos en esos puntos.
+- **Justificación:** el SNIES la informa solo para maestrías, y no para todas. Está disponible desde la ejecución del 22/04/2026 y las descargas del 22/09/2026, 29/09/2026 y 06/10/2026 no la incluyeron; en esas fechas, y en las anteriores, los programas figuran como *SIN INFORMACION* en las gráficas, de modo que las series por justificación presentan saltos en esos puntos.
 - **Tamaño de datos:** el Dashboard carga todos sus datos en el navegador (unos 1,7 MB de archivos de datos sin comprimir). Está dimensionado para el universo vigilado.
 - **Detalle de programas activos:** el Dashboard no presenta una tabla de todos los programas activos de cada ejecución; ese detalle se consulta en el histórico.
 
@@ -951,11 +951,11 @@ Las versiones se registran en `Librerias/package.json`, que Dependabot vigila. P
 |---|---|---|
 | El Dashboard muestra datos antiguos | La publicación de Pages está en curso o el navegador conserva una copia. | Esperar unos minutos y recargar con **Ctrl + F5**; verificar el estado en `Actions`. |
 | «Sin datos para los filtros seleccionados» | La combinación de filtros no tiene registros. | Pulsar **LIMPIAR FILTROS** o ampliar la selección. |
-| Un filtro no permite desmarcar una opción | Debe permanecer al menos una opción seleccionada. | Marcar otra opción antes, o usar **AISLAR**. |
+| Un filtro muestra todas las opciones marcadas tras cerrarlo | Se dejó sin ninguna opción marcada: actúa como TODOS y, al cerrar el panel, TODOS vuelve a marcarse. | Desmarcar **TODOS** y marcar las opciones de interés antes de cerrar el panel. |
 | El buscador no encuentra un programa | Solo admite códigos exactos. | Usar el código SNIES completo o el filtro de programas. |
-| No se descarga el archivo Parquet | La tabla no tiene registros, o la página se abrió desde el sistema de archivos. | Ajustar los filtros; abrir el Dashboard por HTTP. |
+| No se descarga el archivo de Excel | La tabla no tiene registros, o la página se abrió desde el sistema de archivos. | Ajustar los filtros; abrir el Dashboard por HTTP. |
 | Un enlace compartido abre otra vista | Algunos valores del enlace no existen en el apartado o son incompatibles entre sí. | Los valores inválidos se restablecen; compartir de nuevo la vista. |
-| Muchos registros muestran la justificación *SIN INFORMACIÓN* | El SNIES informa la justificación solo para maestrías, y no para todas ni en todas las descargas. | No es un error de la herramienta; véase la [sección 2.7](#27-niveles-de-formación-y-justificación). |
+| Muchos registros muestran la justificación *SIN INFORMACION* | El SNIES informa la justificación solo para maestrías, y no para todas ni en todas las descargas. | No es un error de la herramienta; véase la [sección 2.7](#27-niveles-de-formación-y-justificación). |
 | La gráfica por campo de CINE muestra menos series que las marcadas | La gráfica muestra como máximo diez campos (los de más registros). | Reducir la selección. |
 
 ### 27.4 Clasificación y datos
@@ -1052,8 +1052,7 @@ Las columnas provienen del reporte de programas del SNIES, normalizadas (mayúsc
 | `PUNTAJE_TOTAL` | Puntaje de la votación de la clasificación. |
 | `FECHA_DE_OBTENCION` | Fecha de la ejecución (fecha sin hora). |
 | `TIPO_NOVEDAD` | Solo en Nuevos: `NUEVO` o `REACTIVADO`. |
-| `TIPO_CAMBIO_DETECTADO` | Solo en Modificados: `NUMERO DE CREDITOS`, `MUNICIPIO DE OFERTA`, `NOMBRE DEL PROGRAMA`, `NUMERO DE PERIODOS` o `MODALIDAD`. |
-| `CAMBIO_DETECTADO` | Solo en Modificados: `valor anterior → valor nuevo`. |
+| `CAMBIO_DETECTADO` | Solo en Modificados: todos los cambios del programa en la ejecución, con el formato `TIPO: valor anterior → valor nuevo`, separados por ` | ` y en el orden `NUMERO DE CREDITOS`, `MUNICIPIO DE OFERTA`, `NOMBRE DEL PROGRAMA`, `NUMERO DE PERIODOS`, `MODALIDAD`. Hay un solo registro por programa y ejecución. |
 
 ## Anexo B. Parámetros de la dirección
 
@@ -1061,17 +1060,17 @@ Se escriben después de `#`, separados por `&`. Los parámetros repetibles admit
 
 | Parámetro | Valores | Filtro |
 |---|---|---|
-| `buscar` | Código SNIES o de institución padre | Buscador |
+| `buscar` | Texto libre (programa, institución o código) | Buscador |
 | `universidad` | `uninorte`, `mayor`, `otras` (grupos completos) o código de institución padre | Universidades |
 | `programa` | Nombre del programa; con `!` como primer valor, los demás se excluyen | Programas académicos |
-| `departamento`, `municipio` | Nombre normalizado | Departamentos, municipios |
+| `departamento` | Nombre normalizado | Departamentos |
 | `sector` | `OFICIAL`, `PRIVADO` | Sectores |
 | `nivel` | Nombre del nivel de formación (por ejemplo, `MAESTRIA`) | Niveles de formación |
-| `modalidad` | `A DISTANCIA`, `DUAL`, `HIBRIDA`, `PRESENCIAL`, `VIRTUAL`, `SIN INFORMACIÓN` | Modalidades |
-| `justificacion` | `PROFUNDIZACION`, `INVESTIGACION`, `SIN INFORMACIÓN` | Justificaciones |
+| `modalidad` | `A DISTANCIA`, `DUAL`, `HIBRIDA`, `PRESENCIAL`, `VIRTUAL`, `SIN INFORMACION` | Modalidades |
+| `justificacion` | `PROFUNDIZACION`, `INVESTIGACION`, `SIN INFORMACION` | Justificaciones |
 | `cine` | Nombre del campo específico | Campos de CINE |
 | `division` | Nombre de la división | Divisiones |
-| `cambio` | Tipo de cambio (`NUMERO DE CREDITOS`, etc.) | Cambios (solo Modificados) |
+| `cambio` | Tipo de cambio (`NUMERO DE CREDITOS`, etc.; repetible) | Cambios (solo Modificados) |
 | `fecha` | `AAAA-MM-DD` (repetible) | Fechas: ejecuciones |
 | `desde` y `hasta` | `AAAA-MM-DD` | Fechas: rango |
 | `mes` | `AAAA-MM` (repetible) | Fechas: meses |
