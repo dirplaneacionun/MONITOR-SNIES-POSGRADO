@@ -33,6 +33,23 @@
   const colorSector = (acento = ROJO) => ({ PRIVADO: acento, OFICIAL: NEGRO });
   const SECTOR_COLOR = colorSector();
   /**
+   * Sectores presentes en los datos, en orden: privado y oficial primero y los demás por orden alfabético. Cualquier sector
+   * nuevo del SNIES se incorpora solo en las gráficas, sin tocar el código.
+   */
+  const ordenSectores = (valores) => {
+    const base = Object.keys(SECTOR_COLOR), presentes = [...new Set(valores)];
+    return [...base.filter((s) => presentes.includes(s)), ...presentes.filter((s) => !base.includes(s)).sort((a, b) => String(a).localeCompare(String(b), "es"))];
+  };
+  /**
+   * Color de cada sector de `sectores`: oficial en negro, privado en el color de acento de la página y cualquier otro sector con un
+   * color de la paleta de series (distinto del acento y del negro), el mismo en el anillo y en la evolución.
+   */
+  const coloresSector = (sectores, acento = ROJO) => {
+    const base = colorSector(acento), nuevos = ordenSectores(sectores).filter((s) => !(s in base));
+    const libres = CATEGORICA.filter((c) => c !== acento && c !== NEGRO && c !== ROJO);
+    return Object.fromEntries(sectores.map((s) => [s, base[s] || libres[nuevos.indexOf(s) % libres.length]]));
+  };
+  /**
    * Colores de la justificación con la misma regla del sector: profundización en el color de acento de la página (rojo
    * en Inicio e Inactivos, verde en Nuevos, amarillo en Modificados), investigación en negro y SIN INFORMACION en gris.
    * Un valor no contemplado toma un color de la paleta de series. Retorna { categoría: { color } } para las categorías de `lista`.
@@ -1320,7 +1337,7 @@
   }
 
   window.App = {
-    C, CAT, ESTADO, CATEGORICA, MAX_SERIES, GRIS, SECTOR_COLOR, colorSector, ROJO, AMARILLO, NEGRO, OCRE, colorLinea, marcador, TINTA, TINTA2, fmt, fmtFecha, plural, variacion, esc, normalizar,
+    C, CAT, ESTADO, CATEGORICA, MAX_SERIES, GRIS, SECTOR_COLOR, colorSector, ordenSectores, coloresSector, ROJO, AMARILLO, NEGRO, OCRE, colorLinea, marcador, TINTA, TINTA2, fmt, fmtFecha, plural, variacion, esc, normalizar,
     decodificar, derivar, separarCambios, asignarColores, Filtros, SelectorCine, Tabla, lineas, barrasH, barrasV, torta, plotly, vacio,
     contarPorFecha, contarPorFechaMulti, contar, seriesPorCategoria, ejeMeses, ejeEntero, grupoModalidad, valorFecha, tipoColumna,
     primeraFecha, desdeFecha, opcionesProgramas, categoriasPosgrado, coloresJustificacion,

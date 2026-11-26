@@ -10,7 +10,6 @@
   // y las barras de las gráficas del apartado, incluidas las de universidades.
   const color = A.ESTADO[tipo];
   const colorUniversidades = color;
-  const colorSector = A.colorSector(color);
   const registros = A.decodificar(S[tipo]);
   const tiposCambio = C.catalogos.tipos_cambio;
 
@@ -128,9 +127,10 @@
     A.lineas($("g-modalidad"), fechas, A.seriesPorCategoria(porMod, modalidades, colMod), { modo: "acumulado" });
 
     const sec = A.contar(filas, "SECTOR");
-    A.torta($("g-sector"), sec.map((s) => s[0]), sec.map((s) => s[1]), sec.map((s) => colorSector[s[0]] || A.GRIS));
+    A.torta($("g-sector"), sec.map((s) => s[0]), sec.map((s) => s[1]), sec.map((s) => A.coloresSector(sec.map((x) => x[0]), color)[s[0]]));
     const porSec = A.contarPorFecha(filas, fechas, "SECTOR");
-    A.lineas($("g-sector-evol"), fechas, Object.keys(colorSector).filter((s) => porSec[s]).map((s) => ({ nombre: s, valores: porSec[s], color: colorSector[s] })), { modo: "acumulado" });
+    const colSec = A.coloresSector(Object.keys(porSec), color);
+    A.lineas($("g-sector-evol"), fechas, A.ordenSectores(Object.keys(porSec)).map((s) => ({ nombre: s, valores: porSec[s], color: colSec[s] })), { modo: "acumulado" });
 
     // Nivel de formación (evolución acumulada) y justificación (distribución del periodo filtrado y evolución acumulada)
     A.lineas($("g-nivel-evol"), fechas, A.seriesPorCategoria(A.contarPorFecha(filas, fechas, "_NF"), niveles, colNiv), { modo: "acumulado" });

@@ -102,7 +102,8 @@
       const porCine = evolucion(vs, n, CAMPO_CINE);
       A.lineas($("g-cine"), fechasR, selectorCine.sel.map((c) => ({ nombre: c, valores: serie(porCine[c] || new Array(n).fill(0)), color: selectorCine.colorDe(c) })), { modo: "stock" });
       const porSec = evolucion(vs, n, "SECTOR");
-      A.lineas($("g-sector-evol"), fechasR, Object.keys(A.SECTOR_COLOR).filter((s) => porSec[s]).map((s) => ({ nombre: s, valores: serie(porSec[s]), color: A.SECTOR_COLOR[s] })), { modo: "stock" });
+      const colSec = A.coloresSector(Object.keys(porSec));
+      A.lineas($("g-sector-evol"), fechasR, A.ordenSectores(Object.keys(porSec)).map((s) => ({ nombre: s, valores: serie(porSec[s]), color: colSec[s] })), { modo: "stock" });
       const porNiv = evolucion(vs, n, "_NF");
       A.lineas($("g-nivel-evol"), fechasR, niveles.filter((k) => porNiv[k]).map((k) => ({ nombre: k, valores: serie(porNiv[k]), color: colNiv[k].color })), { modo: "stock" });
       const porJus = evolucion(vs, n, "_JU");
@@ -111,7 +112,7 @@
 
     textos("[data-fecha-corte]", hayCorte ? A.fmtFecha(fechasActivos[corte]) : "–");
     const sec = A.contar(enCorte, "SECTOR");
-    A.torta($("g-sector"), sec.map((s) => s[0]), sec.map((s) => s[1]), sec.map((s) => A.SECTOR_COLOR[s[0]] || A.GRIS));
+    A.torta($("g-sector"), sec.map((s) => s[0]), sec.map((s) => s[1]), sec.map((s) => A.coloresSector(sec.map((x) => x[0]))[s[0]]));
     const jus = A.contar(enCorte, "_JU");
     A.torta($("g-justificacion"), jus.map((s) => s[0]), jus.map((s) => s[1]), jus.map((s) => (colJus[s[0]] || {}).color || A.GRIS), { leyenda: true });
     const dep = A.contar(enCorte, "DEPARTAMENTO_OFERTA_PROGRAMA").slice(0, 10);
