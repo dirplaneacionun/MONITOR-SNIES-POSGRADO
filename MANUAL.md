@@ -653,21 +653,6 @@ https://api.github.com/repos/dirplaneacionun/MONITOR-SNIES-POSGRADO/actions/work
 > /dev/null
 ```
 
-![Configuración común del trabajo](Cron-job/01-comun.png)
-*Configuración común del trabajo: título, dirección (URL) del flujo y estado habilitado.*
-
-![Programación personalizada](Cron-job/02-programacion.png)
-*Programación personalizada: jueves a las 8:00, zona horaria America/Bogota (expresión `0 8 * * 4`).*
-
-![Notificaciones](Cron-job/03-notificaciones.png)
-*Notificaciones: aviso por todos los canales ante un fallo, al recuperarse y si el trabajo se deshabilita.*
-
-![Opciones avanzadas](Cron-job/04-avanzado.png)
-*Opciones avanzadas: zona horaria, método POST, cuerpo `{"ref": "main"}` y tiempo de espera de 30 segundos.*
-
-![Encabezados de la solicitud](Cron-job/05-encabezados.png)
-*Encabezados de la solicitud (el valor de `Authorization` se oculta: es el token).*
-
 ### 14.2 Pasos del flujo
 
 | Paso | Descripción |
